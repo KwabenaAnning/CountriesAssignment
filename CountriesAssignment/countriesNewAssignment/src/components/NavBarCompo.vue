@@ -19,7 +19,7 @@
 
 .nav{
     display: flex;
-    padding: 30px 0px 30px 16px;
+    padding: 30px 16px 30px 16px;
     justify-content: space-between;
     background: #FFF;
    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
@@ -30,7 +30,6 @@
     justify-content:center;
     align-items: center;
     display: Flex;
-    padding-right: 16px;
     gap:8px
 }
 
