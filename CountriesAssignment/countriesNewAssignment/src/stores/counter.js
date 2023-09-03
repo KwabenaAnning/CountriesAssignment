@@ -9,9 +9,9 @@ const loading = ref(false);
 export const useCounterStore = defineStore('counter', () => {
 
   const countries=ref()
-const loadData = async () => {  
-  loading.value = true;
-}
+// const loadData = async () => {  
+//   loading.value = true;
+// }
 
 
   async function getCountries(name){

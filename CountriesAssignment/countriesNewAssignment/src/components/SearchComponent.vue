@@ -5,7 +5,7 @@ import { useRouter} from 'vue-router';
 
 // const toggleLoader = () => {
 //   loading.value = !loading.value;
-// };
+// };git
 // Use the onMounted hook to fetch data after the component is mounted
 const country =useCounterStore()
 const router=useRouter()
@@ -16,10 +16,9 @@ const individualCountry = ref('');
 
 const continents = ['Africa', 'Asia', 'Europe', 'Americas', 'Oceania'];
 
-
-
 // onMounted(async () => {
 //   loading.value = true;
+
 //   await country.getCountries(input.value); // Assuming getCountries is an asynchronous function
 //   loading.value = false; // Set loading to false after data is loaded
 // });
@@ -87,7 +86,7 @@ const filteredBySearch = computed(() => {
             </div>
         </div>
     </div>
-    <div class="lds-facebook" v-if="loading"><div></div><div></div><div></div></div>
+    <!-- <div class="lds-facebook" v-if="loading"><div></div><div></div><div></div></div> -->
 </template>
 
 

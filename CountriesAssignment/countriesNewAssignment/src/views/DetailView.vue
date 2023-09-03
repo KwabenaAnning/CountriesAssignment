@@ -3,6 +3,7 @@ import { useCounterStore } from '../stores/counter';
 import { useRoute, useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 // import { computed } from 'vue';
+import MyloaderCompo from '../components/MyloaderCompo.vue';
 import { RouterLink } from 'vue-router';
 
 const mycountryList = useCounterStore();
@@ -16,9 +17,11 @@ const route = useRoute();
 // });
 const onlyOneCountry = ref(null);
 // this is taking the a push from the dispOneCountry into it. keeping to display it in the detail view.
+const isloading = ref(true);
 onMounted(async () => {
   const countryName = route.params.name;
   onlyOneCountry.value = await mycountryList.dispOnecountry(countryName);
+  isloading.value =false
 });
 </script>
  
@@ -29,9 +32,13 @@ onMounted(async () => {
             <img src="@/assets/call-made.svg" alt="">
             <button><RouterLink to="/">Back</RouterLink></button>
         </div>
-        <div class="texxts">
+        <div class="main" v-if="isloading">
+            <MyloaderCompo /> <!-- Replace with the name of your loader component -->
+        </div>
+        <div class="texxts" v-else>
             <div class="textUnder1" v-if="onlyOneCountry">
                 <img :src="onlyOneCountry?.flags.png" alt="" class="img">
+                <div class="borderS">
                 <div class="textNoimage">
                     <div class="pees">
                         <p> {{ onlyOneCountry?.name }}</p>
@@ -42,11 +49,19 @@ onMounted(async () => {
                         <p><b>Capital: </b> {{onlyOneCountry?.capital  }}</p>
                     </div>
                     <div class="textUnder2">
-                        <p><b>Top Level Domain: </b> {{ onlyOneCountry?.tld }}</p>
-                        <p><b>Currency: </b> {{ onlyOneCountry?.currencies }}</p>
+                        <p><b>Top Level Domain: </b> {{ onlyOneCountry?.tld[0] }}</p>
+                        <p><b>Currencies: </b> <span v-for ="(currency, index) in onlyOneCountry?.currencies" :key="index">{{ currency.name}}
+                        <span v-if="index < onlyOneCountry?.currencies.length - 1"> ,</span> </span></p>
                         <p><b>Languages: </b> {{ onlyOneCountry?.languages }}</p>
                     </div>
                 </div>
+                <div class="borderCountries">
+                    <h4>Border Countires</h4>
+                    <ul>
+                        <li v-for="borderCountry in onlyOneCountry.borders" :key="borderCountry">{{ borderCountry }}</li>
+                    </ul>
+                </div>
+            </div>
             </div>
         </div>
       <!-- <div v-else>
@@ -54,7 +69,7 @@ onMounted(async () => {
       </div> -->
     </div>
   </template>
-  
+
 
 <style scoped>
 .detailPage{
@@ -115,8 +130,6 @@ button{
     align-items: center;
 }
 
-
-
 b{
     color: #111517;
     font-size: 14px;
@@ -139,6 +152,36 @@ b{
     font-style: normal;
     font-weight: 300;
     line-height: 32px;
+}
+
+.borderS{
+    display:flex;
+  flex-direction:column;
+}
+
+.borderCountries{
+    display:flex;
+  flex-direction:column;
+  gap:32px
+}
+
+ul{
+  display:flex;
+  flex-direction:column;
+  gap:32px
+}
+
+li{
+    list-style:none;
+    border-radius: 2px;
+    border: 0px solid #979797;
+    background: #FFF;
+    box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.10);
+    max-width:96px;
+    width:100%;
+    max-height:28px;
+    height:100%;
+  padding:5px 27px;
 }
 
 @media (min-width: 750px) {
@@ -174,6 +217,23 @@ b{
 
 .pees{
     font-size: 15px;
+}
+
+.borderS{
+    display:flex;
+  flex-direction:column;
+  gap: 69px;
+}
+
+.borderCountries{
+  display:flex;
+  flex-direction:row;
+  gap:32px
+}
+ul{
+  display:flex;
+  flex-direction:row;
+ gap: 32px;
 }
 
 }
